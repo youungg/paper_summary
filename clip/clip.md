@@ -40,11 +40,12 @@ zero shot : tuning 없이 downstream task 평가를 진행하였다 + 다운스�
     - Imagenet의 약 30배 이상 규모
 - 
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled.png)
+![Untitled](clip/Untitled.png)
+
 
 - 
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%201.png)
+![Untitled](clip/Untitled%201.png)
 
 - 텍스트 인코더 거쳐 가지고 들어가 →, 토크나이제이션 → 트랜스포머 쓰는 경우에는 포지션 임베딩도 같이 들어감 → 그렇게 해가지고 나온 이제 CLS벡터 같은 거를 이제 사용→텍스트임베딩
 - image encoder도  Resnet50 or VIT 사용
@@ -52,35 +53,35 @@ zero shot : tuning 없이 downstream task 평가를 진행하였다 + 다운스�
 - positive는 증가 시키는 방향/ negative는 감소 시키는 방향
 - normaliztion 진행한것이 차이점
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%202.png)
+![Untitled](clip/Untitled%202.png)
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%203.png)
+![Untitled](clip/Untitled%203.png)
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%204.png)
+![Untitled](clip/Untitled%204.png)
 
 - prompt engineering : 워드 단위의 레이블들에 대해서 뭔가 좀 더 문장 형식으로 만들어주는 과정
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%205.png)
+![Untitled](clip/Untitled%205.png)
 
 - similarity 계산후  softmax 해주고 top5 뽑기
 - 위 내용중 중요 내용은 prompt engineering  : 얘네를 얼마나 잘하는냐에 따라 image classification 성능이 천차만별
 - image encoder는 다양한  이미지 디스크립션으로 퍼스티브 페어링이 되어서 훈련이 되어있다 →이미지랑은 조금 더 잘 매칭이 되기 위해서는 그 클래스의 레이블 텍스트 자체가 조금 더 문장 형식이어야 된다 →근데 이제 보통 그 뭐 이미지넷 같은 classification 매지막 보면은 클래스에 이름 자체가 단어잖아요 그렇기 때문에이 단어를 조금 더 풀어서 조금 더 디스크립션 형태와 유사하게 만들어주는 역할을 하는게 프롬프트 엔지니어링
 - 거꾸로 얘기하면 이제 만약에 클립을 사용해도 prompt engineering 잘 못하면 성능이 그렇게 좋지 않습니다
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%206.png)
+![Untitled](clip/Untitled%206.png)
 
 - batch 사이즈가 크다 보니까 이게 그 메모리를 많이 쓰게 된다 → 그래서 저런 엔지니어링 기법을 동반하지 않을 수가 없을 것 같다
 - 추가로 optimize 기법 : grad cache
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%207.png)
+![Untitled](clip/Untitled%207.png)
 
 - 
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%208.png)
+![Untitled](clip/Untitled%208.png)
 
 - prompt로 텍스트 인베딩 벡터들을 계산을 하면은 그것에 대해서 이제 인베딩 스페이스에서 앙상블을 계산을 한다 →임베딩 스페이스에서 피쳐들을 에버리지를 하고 classification 를 한번 돌리도록 작업
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%209.png)
+![Untitled](clip/Untitled%209.png)
 
 - 27가지 데이터셋이 주로 언급
 - 12가지 데이터셋은 기존의 이미지넷 모델이 트랜스퍼가 이제 잘 되는지를 연구된 데이터
@@ -96,19 +97,19 @@ zero shot : tuning 없이 downstream task 평가를 진행하였다 + 다운스�
 
 →우측 그림 위를 통해 쉬운  task는 튜닝을 한 것보다 안한것이 성능이 더 좋다
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2010.png)
+![Untitled](clip/Untitled%2010.png)
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2011.png)
+![Untitled](clip/Untitled%2011.png)
 
 → 그래프에서 원샷과 투샷의 진행한 clip 모델보다 성능이 더 좋은 것이 zero shot clip이 성능이 더 좋다
 
 →어설프게 few shot을 주면 generality를 해치기 때문에 성능이 안좋다
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2012.png)
+![Untitled](clip/Untitled%2012.png)
 
 - few shot 진행 시, zero shot 성능을 매칭하려면 얼마만큼의 label 데이터가 필요한가
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2013.png)
+![Untitled](clip/Untitled%2013.png)
 
 - gray dot line은 zero shot과 linear probe clip 성능이 같은 지점
 - 그래프상 아래로 치우쳤다 → linear probe clip 성능이 더 좋다
@@ -116,11 +117,11 @@ zero shot : tuning 없이 downstream task 평가를 진행하였다 + 다운스�
 
 → 선형 probe 성능이 높다 : 일반적인 태스크에서 성능이 좋다
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2014.png)
+![Untitled](clip/Untitled%2014.png)
 
 - 연산량에 따라 error가 얼마나 떨어지는지
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2015.png)
+![Untitled](clip/Untitled%2015.png)
 
 - 앞선 결과들은 제로샷 트랜스퍼가 가능한지 제너럴라이션이 얼마나 되었는지를 확인하고자 하는 부분이었다면 이번에는 랭귀지를 같이 학습함으로써 비주얼 리프리젠테이션이 얼마나 좋은 성능을 내는지를 평가를 하는 부분
 - left :  12dataset
@@ -132,13 +133,13 @@ zero shot : tuning 없이 downstream task 평가를 진행하였다 + 다운스�
 - 그리고 best 모델은 patch 14에 input 336*336 → 해상도가 더 좋은 이미지 사용 → 이렇게 보면 해상도 키워서 더 촘촘히 자르면 성능이 올라간다
 - 생각해보면 당연해보임 → 그럼 ocr은 어떨까? → patch 작아지면 글자를 너무 크게 보지않을까?
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2016.png)
+![Untitled](clip/Untitled%2016.png)
 
 - efficientnet L2 noisy student
 - 앞에서 제로샷 성능을 비교했을때는 뭔가 제너럴한 이미지에 대해서는 상당히 좋고 파인그레인즈 좀 더 세부적인 특화된 그런 이미지들에 대해서는 이제 성능이 좋지 않은 것을 발견 → 이 표에서는 비주얼 리프레젠테이션에 대해서 로지스틱 리그레이션을 수행한 이 결과는 대체적으로 그 클립의 성능이 더 좋은 것이 볼 수 있습니다 그래서 기존에 쏘타모델보다 비주얼 리프레젠테이션이 좀 더 제너럴하게 다양하게 이제 학습이 되었다라고 생각
 - 여기서 cifar10, cifar100 는 low resolution이라 성능이 떨어지는것 같다라고 추측
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2017.png)
+![Untitled](clip/Untitled%2017.png)
 
 - 데이터셋에 변화가 주어졌을 때 인식하는 성능이 얼마나 로버스트한지 평가를 한 표
 - imagenetV2: 더 복잡한 이미지
@@ -151,9 +152,9 @@ zero shot : tuning 없이 downstream task 평가를 진행하였다 + 다운스�
 - Standard ImageNet training 보다 Zero-Shot CLIP가 높은 위치에 존재한다 → 더욱 roburst하다 → zero shor 이  더 genralize하다
 - 
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2018.png)
+![Untitled](clip/Untitled%2018.png)
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2019.png)
+![Untitled](clip/Untitled%2019.png)
 
 - zero shot 성능이 많이 좋다
 
@@ -161,13 +162,13 @@ zero shot : tuning 없이 downstream task 평가를 진행하였다 + 다운스�
 
 → 일반화시킬 수 있는 성능을 잘못하면 해칠 수 있다
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2020.png)
+![Untitled](clip/Untitled%2020.png)
 
 → ai가 못찾는 클래스는 사람도 못찾는다
 
 → zero shot  → one shot 찾는 방식이 다르다
 
-![Untitled](clip%20contrastive%20language%20image%20pre-train%20b5bfd5cadc1741719eb44a90a6f115e7/Untitled%2021.png)
+![Untitled](clip/Untitled%2021.png)
 
 → 컴퓨터 비전 분야에서 task agnostic 한 objective를 훈련시킬 수 있을까에 대한 모티베이션을 가지고 시작된 논문
 
